@@ -399,7 +399,8 @@ a:hover {
 
 /* ── 11. Mapa ─────────────────────────────────────────────────────────── */
 
-/* Jedna mapa nad Luhačovicemi: kolonáda, vila Bellevue a Hotel Vincent.
+/* Jedna mapa nad Luhačovicemi: kolonáda, vila Bellevue, Hotel Vincent
+   a penzion Karina.
    Kreslí ji Leaflet z CDN v `assets/js/main.js`; bez JavaScriptu zůstanou
    jen odkazy pod mapou. Google `output=embed` umí jen jeden pin. */
 
