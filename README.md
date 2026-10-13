@@ -1,7 +1,8 @@
 # Luhačovice 2026
 
 Jednostránkový web k výletu do Luhačovic — instrukce, program, ubytování na mapě,
-týmy a kontakty. Žádný build, žádné závislosti: tři statické soubory a hotovo.
+týmy a kontakty. Žádný build: tři vlastní soubory a k tomu Leaflet z CDN kvůli
+mapě — jediná externí závislost, pinovaná verze se SRI.
 
 Živě na <https://martinpaprcka77.github.io/Luhacovice2026/>.
 
@@ -38,14 +39,15 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
   JavaScriptu — prohlížeč ho přepíše živým odpočtem.
 - **Přidat řádek programu** — zkopíruj jeden `<li>` v `<ol class="timeline">`
   a přepiš `<span class="time">` a `<span class="what">`.
-- **Přidat ubytování** — zkopíruj jednu `<div class="card">` v `<div class="stays">`.
-  Patří-li k němu i pin na mapě, zkopíruj v `<div class="maps">` ještě jeden
-  `<div class="map-block">` a přepiš popisek, `src` iframe a odkazy pod mapou.
-- **Změnit mapu** — v sekci `Ubytování a mapa` má každé ubytování vlastní
-  `<div class="map-block">` s `<iframe>`. Uvnitř je Google Maps přes
-  `output=embed`, což funguje bez API klíče; jeden rámec ale vždy ukáže jen
-  jeden pin, proto má každé místo vlastní mapu. Mapy.cz se do rámce vložit
-  nedá (blokuje to), proto je pod každou mapou jen odkaz na něj.
+- **Přidat ubytování** — zkopíruj jednu `<div class="card">` v `<div class="stays">`
+  a přidej bod do pole `mista` v `assets/js/main.js`, ať má místo i pin na mapě.
+- **Změnit mapu** — mapa je Leaflet z CDN (`unpkg.com/leaflet@1.9.4`, se SRI)
+  a dlaždice z OpenStreetMap. V `assets/js/main.js` je v poli `mista` seznam bodů:
+  `nazev`, `popis`, `lat`, `lon` a nepovinné `kruh: true` pro kolečko místo pinu
+  (tak je vyznačená kolonáda). Mapa se vycentruje na všechny body, takže se drží
+  na Luhačovicích. Bez JavaScriptu nebo bez Leafletu zůstanou jen odkazy pod
+  mapou — Google `output=embed` totiž umí jen jeden pin a Mapy.cz se do rámce
+  vložit nedá (blokuje to).
 
 Odkazy na vlastní soubory drž relativně (`./assets/...`). Stránka běží
 v podadresáři `/Luhacovice2026/`, takže absolutní cesta od rootu by se rozbila.
@@ -94,7 +96,7 @@ Pokud ji chceš zviditelnit, ten řádek smaž.
 ```
 index.html                    celý obsah stránky
 assets/css/style.css          jediný stylesheet
-assets/js/main.js             podtržení aktivní sekce a odpočty do startu
+assets/js/main.js             podtržení aktivní sekce, odpočty a mapa (Leaflet)
 assets/img/favicon.svg        ikona
 .github/workflows/pages.yml   nasazení na GitHub Pages
 ```

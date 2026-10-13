@@ -399,33 +399,13 @@ a:hover {
 
 /* ── 11. Mapa ─────────────────────────────────────────────────────────── */
 
-/* Dvě ubytování = dvě mapy pod sebou, každá s vlastním pinem. Google Maps
-   přes `output=embed` umí v jednom rámci jen jeden marker, proto dva rámce. */
-
-.maps {
-    display: grid;
-    gap: 28px;
-    margin: 0 0 26px;
-}
-
-.map-label {
-    margin: 0 0 8px;
-    font-family: var(--font-display);
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--green-900);
-}
-
-.map-label-who {
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink-muted);
-}
+/* Jedna mapa nad Luhačovicemi: kolonáda, vila Bellevue a Hotel Vincent.
+   Kreslí ji Leaflet z CDN v `assets/js/main.js`; bez JavaScriptu zůstanou
+   jen odkazy pod mapou. Google `output=embed` umí jen jeden pin. */
 
 .map-frame {
     position: relative;
-    margin: 0 0 10px;
+    margin: 0 0 12px;
     border: 1px solid rgba(39, 80, 63, 0.25);
     border-radius: var(--radius);
     overflow: hidden;
@@ -433,17 +413,45 @@ a:hover {
     box-shadow: var(--shadow);
 }
 
-.map-frame iframe {
-    display: block;
-    width: 100%;
-    height: clamp(260px, 52vh, 420px);
-    border: 0;
+.map-canvas {
+    height: clamp(300px, 55vh, 460px);
+    background: var(--green-100);
+}
+
+.map-noscript {
+    margin: 0;
+    padding: 18px 20px;
+    color: var(--ink-muted);
 }
 
 .map-actions {
     margin: 0;
     font-size: 15px;
     color: var(--ink-muted);
+}
+
+/* Popisky v mapě ať nelžou písmem — Leaflet si veze vlastní. */
+.leaflet-container {
+    font-family: var(--font-body);
+}
+
+.leaflet-popup-content {
+    margin: 10px 14px;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.leaflet-popup-content strong {
+    font-family: var(--font-display);
+    font-size: 15px;
+    color: var(--green-900);
+}
+
+.leaflet-tooltip {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-900);
 }
 
 /* ── 12. Ubytování ────────────────────────────────────────────────────── */

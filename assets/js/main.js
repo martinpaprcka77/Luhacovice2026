@@ -150,3 +150,69 @@
         }
     }
 })();
+
+// ── Mapa ───────────────────────────────────────────────────────────────
+// Jedna mapa nad Luhačovicemi: kolonáda, vila Bellevue a Hotel Vincent.
+// Kreslí ji Leaflet z CDN; když se nenačte, zůstanou odkazy pod mapou.
+// Souřadnice jsou z OpenStreetMap, takže se dají kdykoli dohledat.
+
+(function () {
+    'use strict';
+
+    var mapa = document.getElementById('mapa');
+
+    if (!mapa || typeof window.L === 'undefined') {
+        return;
+    }
+
+    var mista = [
+        { nazev: 'Kolonáda a prameny', popis: 'Vincentka a spol. — pije se přímo na místě.', lat: 49.10680, lon: 17.76259, kruh: true },
+        { nazev: 'Vila Bellevue', popis: 'U Šťávnice 237 — Manželé Paprčkovi.', lat: 49.10067, lon: 17.75802 },
+        { nazev: 'Hotel Vincent', popis: 'Hradisko 467 — Kiki + Vašek + Natálka.', lat: 49.09506, lon: 17.75002 }
+    ];
+
+    var map = window.L.map(mapa, {
+        // Kolečko myši ať roluje stránkou, ne mapou.
+        scrollWheelZoom: false
+    });
+
+    window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var body = [];
+
+    mista.forEach(function (misto) {
+        var souradnice = [misto.lat, misto.lon];
+        var znacka;
+
+        if (misto.kruh) {
+            // Kolonáda je bod v krajině, ne ubytování — proto kolečko s popiskem.
+            znacka = window.L.circleMarker(souradnice, {
+                radius: 9,
+                color: '#27503f',
+                weight: 3,
+                fillColor: '#d8bb80',
+                fillOpacity: 1
+            }).addTo(map);
+
+            znacka.bindTooltip('Kolonáda', {
+                permanent: true,
+                direction: 'right',
+                offset: [10, 0]
+            });
+        } else {
+            znacka = window.L.marker(souradnice, {
+                alt: misto.nazev,
+                title: misto.nazev
+            }).addTo(map);
+        }
+
+        znacka.bindPopup('<strong>' + misto.nazev + '</strong><br>' + misto.popis);
+        body.push(souradnice);
+    });
+
+    // Vycentrováno na Luhačovice: všechny tři body leží ve městě.
+    map.fitBounds(body, { padding: [28, 28] });
+})();

@@ -10,6 +10,8 @@
     <meta name="description" content="Výlet do Luhačovic 2026 — instrukce, program, ubytování na mapě a kdo jede.">
     <link rel="icon" href="./assets/img/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <!-- Mapa: Leaflet z CDN, pinovaná verze 1.9.4 se SRI, ať se obsah nedá podstrčit. -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 <body>
     <a class="skip" href="#instrukce">Přeskočit na instrukce</a>
@@ -17,7 +19,7 @@
     <!-- ── Aktuality ──────────────────────────────────────────────── -->
     <aside class="ticker" aria-label="Aktuality a datum poslední aktualizace">
         <div class="ticker-track">
-            <span class="ticker-text">Stránka vytvořena <span data-created>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Poslední update: <span data-updated>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Prosím obnovujte stránku sami, aktuality a potvrzení přidávám sem, vždy po nové informaci nebo potvrzení od kohokoliv &nbsp;·&nbsp; Nově: potvrzené týmy mají zelenou fajfku a ubytování máme dvě — vilu Bellevue a Hotel Vincent &nbsp;·&nbsp; Další update nejpozději 14.&nbsp;10. v&nbsp;17:00 &nbsp;·&nbsp; </span>
+            <span class="ticker-text">Stránka vytvořena <span data-created>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Poslední update: <span data-updated>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Prosím obnovujte stránku sami, aktuality a potvrzení přidávám sem, vždy po nové informaci nebo potvrzení od kohokoliv &nbsp;·&nbsp; Nově: zjednodušený program, doprava jen autobusem a jedna mapa se všemi místy &nbsp;·&nbsp; Další update nejpozději 14.&nbsp;10. v&nbsp;17:00 &nbsp;·&nbsp; </span>
         </div>
     </aside>
 
@@ -66,7 +68,7 @@
             <p class="eyebrow">Prakticky</p>
             <h2 class="section-title">Instrukce</h2>
             <p class="section-lead">
-                Co si vzít, jak to na místě chodí a kde zaparkovat.
+                Co si vzít, jak to na místě chodí a jak se sem dostat.
                 Kdyby něco chybělo, <a href="#kontakty">ozvi se</a>.
             </p>
 
@@ -76,7 +78,6 @@
                     <ul class="checklist">
                         <li>Pohodlné boty — v lázních se toho nachodí dost.</li>
                         <li>Přezůvky nebo pantofle do ubytování.</li>
-                        <li>Plavky a ručník, pokud půjdeme do bazénu.</li>
                         <li>Láhev na vodu — prameny se pijí přímo na kolonádě.</li>
                         <li>Nepromokavou bundu, počasí si dělá, co chce.</li>
                         <li><span class="todo">Doplnit, co ještě</span></li>
@@ -94,11 +95,10 @@
                 </div>
 
                 <div class="card">
-                    <h3>Doprava a parkování</h3>
+                    <h3>Doprava</h3>
                     <ul class="checklist">
-                        <li>Autem: <span class="todo">Doplnit odkud a za jak dlouho</span></li>
-                        <li>Parkování: <span class="todo">Doplnit, kde se parkuje</span></li>
-                        <li>Vlakem i autobusem se do Luhačovic dostaneš, <span class="todo">doplnit spoj</span></li>
+                        <li>Manželé jedou v pátek z Ostravy (ÚAN) přímým autobusem na zastávku Luhačovice, pošta.</li>
+                        <li>Parkování: v centru je to špatné, je to lázeňské město — počítejte s tím a auto nechte dřív, než dojedete k lázeňskému náměstí.</li>
                     </ul>
                 </div>
             </div>
@@ -116,39 +116,19 @@
             <ol class="timeline">
                 <li>
                     <span class="time">Pátek · příjezd</span>
-                    <span class="what">Od <span class="todo">doplnit čas</span> se hlásíme na ubytování a vybalíme.</span>
+                    <span class="what">Kolem poledne se hlásíme na ubytování a vybalíme.</span>
                 </li>
                 <li>
                     <span class="time">Pátek · večer</span>
-                    <span class="what">Společná večeře (<span class="todo">doplnit podnik</span>) a první posezení.</span>
+                    <span class="what">Večeře jen ve dvou, ostatní přijedou v sobotu.</span>
                 </li>
                 <li>
-                    <span class="time">Sobota · ráno</span>
-                    <span class="what">Snídaně a pomalu se rozhýbat.</span>
+                    <span class="time">Sobota</span>
+                    <span class="what">Kolem poledne dorazí zbytek a ubytujeme se. Odpoledne kolonáda a prameny, procházka lesem, večer společná večeře a posezení.</span>
                 </li>
                 <li>
-                    <span class="time">Sobota · dopoledne</span>
-                    <span class="what">Kolonáda a prameny — ochutnávka Vincentky a spol.</span>
-                </li>
-                <li>
-                    <span class="time">Sobota · oběd</span>
-                    <span class="what"><span class="todo">Doplnit místo</span></span>
-                </li>
-                <li>
-                    <span class="time">Sobota · odpoledne</span>
-                    <span class="what">Procházka lesem, nebo bazén — podle nálady a počasí.</span>
-                </li>
-                <li>
-                    <span class="time">Sobota · večer</span>
-                    <span class="what">Večeře a posezení. Hudba, karty, klidně i zpěv.</span>
-                </li>
-                <li>
-                    <span class="time">Neděle · ráno</span>
-                    <span class="what">Snídaně a balení.</span>
-                </li>
-                <li>
-                    <span class="time">Neděle · dopoledne</span>
-                    <span class="what">Odjezd do <span class="todo">doplnit čas</span>, rozloučíme se u kolonády.</span>
+                    <span class="time">Neděle · odjezd</span>
+                    <span class="what">Kolem 15. hodiny, rozloučíme se u kolonády.</span>
                 </li>
             </ol>
         </section>
@@ -160,47 +140,25 @@
             <p class="section-lead">
                 Ubytování si každý řeší sám. Potvrzená místa máme dvě — vilu Bellevue,
                 kde jsou Manželé Paprčkovi, a Hotel Vincent, kde jsou Kiki, Vašek a Natálka.
-                Každé má na mapě vlastní pin a v seznamu níž odkaz na mapu i Booking.
-                V Luhačovicích se dá všude dojít pěšky.
+                Na mapě je vidět kolonáda i obě ubytování, v seznamu níž je pak odkaz
+                na mapu a Booking. V Luhačovicích se dá všude dojít pěšky.
             </p>
 
-            <div class="maps">
-                <div class="map-block">
-                    <p class="map-label">Vila Bellevue <span class="map-label-who">— Manželé Paprčkovi</span></p>
-                    <div class="map-frame">
-                        <iframe
-                            title="Mapa s vilou Bellevue v Luhačovicích"
-                            src="https://maps.google.com/maps?q=Vila%20Bellevue%2C%20Luha%C4%8Dovice&amp;z=16&amp;hl=cs&amp;output=embed"
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                            allowfullscreen></iframe>
-                    </div>
-                    <p class="map-actions">
-                        Mapa se nenačetla? Otevři si vilu v
-                        <a href="https://maps.google.com/maps?q=U%20%C5%A0%C5%A5%C3%A1vnice%20237%2C%20Luha%C4%8Dovice&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">Google Maps</a>
-                        nebo v
-                        <a href="https://mapy.com/zakladni?q=Vila%20Bellevue%20Luha%C4%8Dovice" target="_blank" rel="noopener">Mapy.cz</a>.
-                    </p>
-                </div>
-
-                <div class="map-block">
-                    <p class="map-label">Hotel Vincent <span class="map-label-who">— Kiki + Vašek + Natálka</span></p>
-                    <div class="map-frame">
-                        <iframe
-                            title="Mapa s Hotelem Vincent v Luhačovicích"
-                            src="https://maps.google.com/maps?q=Hradisko%20467%2C%20Luha%C4%8Dovice%20763%2026&amp;z=16&amp;hl=cs&amp;output=embed"
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                            allowfullscreen></iframe>
-                    </div>
-                    <p class="map-actions">
-                        Mapa se nenačetla? Otevři si hotel v
-                        <a href="https://maps.google.com/maps?q=Hradisko%20467%2C%20Luha%C4%8Dovice%20763%2026&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">Google Maps</a>
-                        nebo v
-                        <a href="https://mapy.com/zakladni?q=Hradisko%20467%20Luha%C4%8Dovice" target="_blank" rel="noopener">Mapy.cz</a>.
-                    </p>
-                </div>
+            <div class="map-frame">
+                <div id="mapa" class="map-canvas" aria-label="Mapa Luhačovic: kolonáda a obě ubytování"></div>
+                <noscript>
+                    <p class="map-noscript">Mapu kreslí JavaScript. Zapni ho, nebo použij odkazy pod mapou.</p>
+                </noscript>
             </div>
+            <p class="map-actions">
+                Mapa se nenačetla? Otevři si Luhačovice v
+                <a href="https://maps.google.com/maps?q=Luha%C4%8Dovice&amp;z=15&amp;hl=cs" target="_blank" rel="noopener">Google Maps</a>
+                nebo v
+                <a href="https://mapy.com/zakladni?q=Luha%C4%8Dovice" target="_blank" rel="noopener">Mapy.cz</a>.
+                Jednotlivá místa: <a href="https://maps.google.com/maps?q=Velk%C3%A1%20kolon%C3%A1da%2C%20Luha%C4%8Dovice&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">kolonáda</a>,
+                <a href="https://maps.google.com/maps?q=U%20%C5%A0%C5%A5%C3%A1vnice%20237%2C%20Luha%C4%8Dovice&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">vila Bellevue</a>,
+                <a href="https://maps.google.com/maps?q=Hradisko%20467%2C%20Luha%C4%8Dovice%20763%2026&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">Hotel Vincent</a>.
+            </p>
 
             <div class="stays">
                 <div class="card">
@@ -308,6 +266,7 @@
         <p class="foot-note">Stránka je jen pro pozvané, v Googlu ji nenajdete. <a href="#top">Nahoru</a></p>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
     <script src="./assets/js/main.js" defer></script>
 </body>
 </html>
