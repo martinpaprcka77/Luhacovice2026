@@ -48,7 +48,6 @@ html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 body {
@@ -64,7 +63,6 @@ body {
         radial-gradient(120% 60% at 100% 12%, rgba(216, 187, 128, 0.32), transparent 55%),
         linear-gradient(180deg, #f8f3e7 0%, #f2ead9 45%, #eadec7 100%);
     background-attachment: fixed;
-    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -706,7 +704,12 @@ a:hover {
 
 /* ── 20. Aktuality (rolující banner) ──────────────────────────────────── */
 
+/* Rolující pás je širší než okno, takže se musí odstřihnout tady v banneru.
+   Do `overflow-x: hidden` na html/body to nepatří: každý předek se tím stane
+   scrollovacím kontejnerem a `position: sticky` na horní liště přestane
+   fungovat (lišta pak odjíždí s obsahem nahoru). */
 .ticker {
+    overflow: hidden;
     background: var(--green-700);
     color: var(--cream);
     border-bottom: 1px solid rgba(20, 48, 42, 0.35);

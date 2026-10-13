@@ -2,6 +2,43 @@
 // Stránka je plně čitelná i bez tohoto souboru: bez JS se jen v navigaci
 // nepodtrhne aktuální sekce a místo odpočtu zůstane v kartě věta
 // s datem a časem startu. Mapu i text řeší samo HTML.
+
+// ── Výška horní lišty ─────────────────────────────────────────────────
+// Lišta je sticky a sekce mají `scroll-margin-top: var(--topbar-h)`, aby
+// nadpis po kliknutí v navigaci neskončil pod lištou. V CSS je záloha 61px,
+// jenže lišta je vyšší, když se připočte safe-area (na plochu na mobilu)
+// nebo když má uživatel větší systémové písmo. Změříme ji tedy doopravdy
+// a proměnnou přepíšeme. Samotnou výšku lišty tím neměníme, takže se měření
+// nezacyklí. Bez JS (nebo než se soubor načte) platí záloha z CSS.
+
+(function () {
+    'use strict';
+
+    var lista = document.querySelector('.topbar');
+
+    if (!lista) {
+        return;
+    }
+
+    function zmerit() {
+        var vyska = lista.offsetHeight + 'px';
+        var koren = document.documentElement;
+
+        if (koren.style.getPropertyValue('--topbar-h') !== vyska) {
+            koren.style.setProperty('--topbar-h', vyska);
+        }
+    }
+
+    zmerit();
+
+    // Při otočení telefonu nebo v režimu na plochu se mění safe-area, takže
+    // se výška změří znovu.
+    window.addEventListener('resize', zmerit);
+    window.addEventListener('orientationchange', zmerit);
+})();
+
+// ── Navigace: podtržení aktivní sekce ─────────────────────────────────
+
 (function () {
     'use strict';
 

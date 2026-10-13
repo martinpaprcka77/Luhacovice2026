@@ -97,7 +97,7 @@ Pokud ji chceš zviditelnit, ten řádek smaž.
 ```
 index.html                    celý obsah stránky
 assets/css/style.css          jediný stylesheet
-assets/js/main.js             podtržení aktivní sekce, odpočty a mapa (Leaflet)
+assets/js/main.js             výška horní lišty, aktivní sekce, odpočty a mapa (Leaflet)
 assets/img/favicon.svg        ikona
 .github/workflows/pages.yml   nasazení na GitHub Pages
 ```
