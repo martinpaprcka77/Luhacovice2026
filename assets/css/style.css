@@ -441,6 +441,12 @@ a:hover {
     color: var(--ink-muted);
 }
 
+.stay-link {
+    margin: 12px 0 0;
+    font-size: 15px;
+    font-weight: 600;
+}
+
 /* ── 13. Týmy ─────────────────────────────────────────────────────────── */
 
 .teams {
