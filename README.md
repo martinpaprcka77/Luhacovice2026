@@ -15,13 +15,14 @@ který se má nahradit skutečností:
 grep -n 'class="todo"' index.html
 ```
 
-Až budeš hotový, mělo by jich zbýt nula. Placeholder se v CSS schválně kreslí
-jako přerušovaný rámeček, aby na stránce nebyl přehlédnutelný.
+Až budeš hotový, mělo by jich zbýt nula — teď jich je nula. Placeholder se
+v CSS schválně kreslí jako přerušovaný rámeček, takže nové „doplnit“ na stránce
+nepřeskočíš.
 
 ## Jak upravit obsah
 
 Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
-(`Hero` — termín a odpočty, `Instrukce`, `Program`, `Ubytování a mapa`, `Týmy`,
+(`Hero` — termín a odpočty, `Instrukce`, `Týmy`, `Program`, `Ubytování a mapa`,
 `Kontakty`).
 
 - **Přidat tým** — zkopíruj jeden `<li class="team">` v sekci `Týmy` a přepiš
