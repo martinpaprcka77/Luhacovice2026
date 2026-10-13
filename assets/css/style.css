@@ -441,37 +441,36 @@ a:hover {
     color: var(--ink-muted);
 }
 
-/* ── 13. Persony ──────────────────────────────────────────────────────── */
+/* ── 13. Týmy ─────────────────────────────────────────────────────────── */
 
-.people {
+.teams {
     display: grid;
     gap: 12px;
     margin: 0;
     padding: 0;
     list-style: none;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 }
 
-.person {
-    padding: 14px 14px 12px;
+.team {
+    padding: 16px 16px 14px;
     border: 1px solid rgba(168, 130, 63, 0.32);
     border-radius: var(--radius);
     background: var(--card-bg);
     box-shadow: var(--shadow-sm);
-    text-align: center;
 }
 
-.person-name {
+.team-name {
     display: block;
     font-family: var(--font-display);
-    font-size: 17px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--green-900);
 }
 
-.person-nick {
+.team-note {
     display: block;
-    margin-top: 2px;
+    margin-top: 4px;
     font-size: 14px;
     color: var(--brass);
 }
@@ -563,7 +562,85 @@ a:hover {
     }
 }
 
-/* ── 19. Tisk ─────────────────────────────────────────────────────────── */
+/* ── 19. Odpočty do startu ────────────────────────────────────────────── */
+
+.countdowns {
+    display: grid;
+    gap: 14px;
+    max-width: 660px;
+    margin: 24px auto 28px;
+    text-align: left;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.countdown {
+    padding: 16px 18px 18px;
+    border: 1px solid rgba(168, 130, 63, 0.32);
+    border-radius: var(--radius);
+    background: var(--card-bg);
+    box-shadow: var(--shadow-sm);
+}
+
+.countdown-who {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green-900);
+}
+
+.countdown-when {
+    display: block;
+    margin: 2px 0 12px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+
+.countdown-clock {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+
+.cd-cell {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 56px;
+    padding: 6px 8px 5px;
+    border-radius: 10px;
+    background: rgba(216, 187, 128, 0.22);
+}
+
+.cd-value {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--green-900);
+    font-variant-numeric: tabular-nums;
+}
+
+.cd-unit {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8a6a2c;
+}
+
+.countdown-done {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green-700);
+}
+
+/* ── 20. Tisk ─────────────────────────────────────────────────────────── */
 
 @media print {
     .topbar,
@@ -578,7 +655,7 @@ a:hover {
     }
 
     .card,
-    .person,
+    .team,
     .map-frame {
         box-shadow: none;
     }

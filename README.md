@@ -1,7 +1,7 @@
 # Luhačovice 2026
 
 Jednostránkový web k výletu do Luhačovic — instrukce, program, ubytování na mapě,
-persony a kontakty. Žádný build, žádné závislosti: tři statické soubory a hotovo.
+týmy a kontakty. Žádný build, žádné závislosti: tři statické soubory a hotovo.
 
 Živě na <https://martinpaprcka77.github.io/Luhacovice2026/>.
 
@@ -20,10 +20,15 @@ jako přerušovaný rámeček, aby na stránce nebyl přehlédnutelný.
 ## Jak upravit obsah
 
 Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
-(`Hero`, `Instrukce`, `Program`, `Ubytování a mapa`, `Persony`, `Kontakty`).
+(`Hero` — termín a odpočty, `Instrukce`, `Program`, `Ubytování a mapa`, `Týmy`,
+`Kontakty`).
 
-- **Přidat osobu** — zkopíruj jeden `<li class="person">` v sekci `Persony`
-  a přepiš jméno a přezdívku. Ubírání funguje stejně.
+- **Přidat tým** — zkopíruj jeden `<li class="team">` v sekci `Týmy` a přepiš
+  `<span class="team-name">` a `<span class="team-note">`. Ubírání funguje stejně.
+- **Změnit odpočet** — v `Hero` je u každé karty atribut `data-countdown`
+  s cílovým datem ve tvaru `2026-10-23T12:00:00+02:00`. Přepiš ho a hotovo.
+  Text uvnitř `<p class="countdown-clock">` je jen záloha pro čtenáře bez
+  JavaScriptu — prohlížeč ho přepíše živým odpočtem.
 - **Přidat řádek programu** — zkopíruj jeden `<li>` v `<ol class="timeline">`
   a přepiš `<span class="time">` a `<span class="what">`.
 - **Přidat ubytování** — zkopíruj jednu `<div class="card">` v `<div class="stays">`.
@@ -61,7 +66,7 @@ Pokud ji chceš zviditelnit, ten řádek smaž.
 ```
 index.html                    celý obsah stránky
 assets/css/style.css          jediný stylesheet
-assets/js/main.js             jen podtržení aktivní sekce v navigaci
+assets/js/main.js             podtržení aktivní sekce a odpočty do startu
 assets/img/favicon.svg        ikona
 .github/workflows/pages.yml   nasazení na GitHub Pages
 ```

@@ -1,6 +1,7 @@
 // Luhačovice 2026 — pár drobností navíc.
 // Stránka je plně čitelná i bez tohoto souboru: bez JS se jen v navigaci
-// nepodtrhne aktuální sekce. Mapu i veškerý text řeší samo HTML.
+// nepodtrhne aktuální sekce a místo odpočtu zůstane v kartě věta
+// s datem a časem startu. Mapu i text řeší samo HTML.
 (function () {
     'use strict';
 
@@ -39,4 +40,59 @@
     Object.keys(linkById).forEach(function (id) {
         observer.observe(document.getElementById(id));
     });
+
+    // ── Odpočty do startu ───────────────────────────────────────────────
+    // Cíle jsou v HTML v atributu data-countdown, takže se datum mění na
+    // jednom místě. Bez JS zůstane uvnitř prvku statická věta o startu.
+
+    function ceskyPocet(n, jeden, par, hodne) {
+        if (n === 1) {
+            return jeden;
+        }
+        return (n >= 2 && n <= 4) ? par : hodne;
+    }
+
+    function bunka(hodnota, jednotka) {
+        return '<span class="cd-cell">' +
+               '<span class="cd-value">' + hodnota + '</span>' +
+               '<span class="cd-unit">' + jednotka + '</span>' +
+               '</span>';
+    }
+
+    Array.prototype.forEach.call(
+        document.querySelectorAll('.countdown-clock[data-countdown]'),
+        function (clock) {
+            var cil = new Date(clock.getAttribute('data-countdown')).getTime();
+            if (isNaN(cil)) {
+                return;
+            }
+
+            var tik = function () {
+                var zbyva = cil - Date.now();
+
+                if (zbyva <= 0) {
+                    window.clearInterval(bezi);
+                    clock.innerHTML = '<span class="countdown-done">Jedeme!</span>';
+                    return;
+                }
+
+                var s = Math.floor(zbyva / 1000);
+                var dny = Math.floor(s / 86400);
+                s -= dny * 86400;
+                var hod = Math.floor(s / 3600);
+                s -= hod * 3600;
+                var min = Math.floor(s / 60);
+                var sek = s - min * 60;
+
+                clock.innerHTML =
+                    bunka(dny, ceskyPocet(dny, 'den', 'dny', 'dní')) +
+                    bunka(hod, ceskyPocet(hod, 'hodina', 'hodiny', 'hodin')) +
+                    bunka(min, ceskyPocet(min, 'minuta', 'minuty', 'minut')) +
+                    bunka(sek, ceskyPocet(sek, 'sekunda', 'sekundy', 'sekund'));
+            };
+
+            var bezi = window.setInterval(tik, 1000);
+            tik();
+        }
+    );
 })();
