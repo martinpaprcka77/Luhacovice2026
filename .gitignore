@@ -1,0 +1,21 @@
+# ---- secrets -------------------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---- local / scratch -----------------------------------------------------
+.tmp/
+tmp/
+scratch/
+*.log
+*.tmp
+*.bak
+*.bak-*
+*.orig
+
+# ---- editors / os --------------------------------------------------------
+.vscode/*
+!.vscode/settings.json
+.idea/
+Thumbs.db
+desktop.ini
