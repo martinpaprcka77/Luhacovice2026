@@ -399,9 +399,33 @@ a:hover {
 
 /* ── 11. Mapa ─────────────────────────────────────────────────────────── */
 
+/* Dvě ubytování = dvě mapy pod sebou, každá s vlastním pinem. Google Maps
+   přes `output=embed` umí v jednom rámci jen jeden marker, proto dva rámce. */
+
+.maps {
+    display: grid;
+    gap: 28px;
+    margin: 0 0 26px;
+}
+
+.map-label {
+    margin: 0 0 8px;
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--green-900);
+}
+
+.map-label-who {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink-muted);
+}
+
 .map-frame {
     position: relative;
-    margin: 0 0 22px;
+    margin: 0 0 10px;
     border: 1px solid rgba(39, 80, 63, 0.25);
     border-radius: var(--radius);
     overflow: hidden;
@@ -417,7 +441,7 @@ a:hover {
 }
 
 .map-actions {
-    margin: 0 0 26px;
+    margin: 0;
     font-size: 15px;
     color: var(--ink-muted);
 }
@@ -479,6 +503,31 @@ a:hover {
     margin-top: 4px;
     font-size: 14px;
     color: var(--brass);
+}
+
+.team-status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 11px 3px 9px;
+    border-radius: 999px;
+    background: rgba(28, 109, 62, 0.13);
+    color: #1c6d3e;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.team-check {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* Potvrzený tým: zelený rámeček i nádech karty, ať je to vidět na první
+   pohled. Nepotvrzené karty zůstávají v běžné kartové barvě. */
+.team.is-confirmed {
+    border-color: rgba(28, 109, 62, 0.5);
+    background: linear-gradient(165deg, #fffdf7 0%, #f2f8f1 55%, #e2efe1 100%);
 }
 
 /* ── 14. Kontakty ─────────────────────────────────────────────────────── */

@@ -17,7 +17,7 @@
     <!-- ── Aktuality ──────────────────────────────────────────────── -->
     <aside class="ticker" aria-label="Aktuality a datum poslední aktualizace">
         <div class="ticker-track">
-            <span class="ticker-text">Stránka vytvořena <span data-created>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Poslední update: <span data-updated>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Prosím obnovujte stránku sami, aktuality a potvrzení přidávám sem, vždy po nové informaci nebo potvrzení od kohokoliv &nbsp;·&nbsp; Další update nejpozději 13.&nbsp;10. v&nbsp;17:00 &nbsp;·&nbsp; </span>
+            <span class="ticker-text">Stránka vytvořena <span data-created>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Poslední update: <span data-updated>13.&nbsp;10.&nbsp;2026</span> &nbsp;·&nbsp; Prosím obnovujte stránku sami, aktuality a potvrzení přidávám sem, vždy po nové informaci nebo potvrzení od kohokoliv &nbsp;·&nbsp; Nově: potvrzené týmy mají zelenou fajfku a ubytování máme dvě — vilu Bellevue a Hotel Vincent &nbsp;·&nbsp; Další update nejpozději 14.&nbsp;10. v&nbsp;17:00 &nbsp;·&nbsp; </span>
         </div>
     </aside>
 
@@ -158,25 +158,49 @@
             <p class="eyebrow">Kde spíme</p>
             <h2 class="section-title">Ubytování a mapa</h2>
             <p class="section-lead">
-                Ubytování si každý řeší sám. Na mapě je zatím jediné potvrzené místo —
-                vila Bellevue, kde jsou Manželé Paprčkovi. Jakmile se přidají další,
-                doplníme je do seznamu níž. V Luhačovicích se dá všude dojít pěšky.
+                Ubytování si každý řeší sám. Potvrzená místa máme dvě — vilu Bellevue,
+                kde jsou Manželé Paprčkovi, a Hotel Vincent, kde jsou Kiki, Vašek a Natálka.
+                Každé má na mapě vlastní pin a v seznamu níž odkaz na mapu i Booking.
+                V Luhačovicích se dá všude dojít pěšky.
             </p>
 
-            <div class="map-frame">
-                <iframe
-                    title="Mapa s vilou Bellevue v Luhačovicích"
-                    src="https://maps.google.com/maps?q=Vila%20Bellevue%2C%20Luha%C4%8Dovice&amp;z=16&amp;hl=cs&amp;output=embed"
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    allowfullscreen></iframe>
+            <div class="maps">
+                <div class="map-block">
+                    <p class="map-label">Vila Bellevue <span class="map-label-who">— Manželé Paprčkovi</span></p>
+                    <div class="map-frame">
+                        <iframe
+                            title="Mapa s vilou Bellevue v Luhačovicích"
+                            src="https://maps.google.com/maps?q=Vila%20Bellevue%2C%20Luha%C4%8Dovice&amp;z=16&amp;hl=cs&amp;output=embed"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p class="map-actions">
+                        Mapa se nenačetla? Otevři si vilu v
+                        <a href="https://maps.google.com/maps?q=U%20%C5%A0%C5%A5%C3%A1vnice%20237%2C%20Luha%C4%8Dovice&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">Google Maps</a>
+                        nebo v
+                        <a href="https://mapy.com/zakladni?q=Vila%20Bellevue%20Luha%C4%8Dovice" target="_blank" rel="noopener">Mapy.cz</a>.
+                    </p>
+                </div>
+
+                <div class="map-block">
+                    <p class="map-label">Hotel Vincent <span class="map-label-who">— Kiki + Vašek + Natálka</span></p>
+                    <div class="map-frame">
+                        <iframe
+                            title="Mapa s Hotelem Vincent v Luhačovicích"
+                            src="https://maps.google.com/maps?q=Hradisko%20467%2C%20Luha%C4%8Dovice%20763%2026&amp;z=16&amp;hl=cs&amp;output=embed"
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            allowfullscreen></iframe>
+                    </div>
+                    <p class="map-actions">
+                        Mapa se nenačetla? Otevři si hotel v
+                        <a href="https://maps.google.com/maps?q=Hradisko%20467%2C%20Luha%C4%8Dovice%20763%2026&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">Google Maps</a>
+                        nebo v
+                        <a href="https://mapy.com/zakladni?q=Hradisko%20467%20Luha%C4%8Dovice" target="_blank" rel="noopener">Mapy.cz</a>.
+                    </p>
+                </div>
             </div>
-            <p class="map-actions">
-                Mapa se nenačetla? Otevři si ji v
-                <a href="https://maps.google.com/maps?q=Vila%20Bellevue%2C%20Luha%C4%8Dovice&amp;z=16&amp;hl=cs" target="_blank" rel="noopener">Google Maps</a>
-                nebo v
-                <a href="https://mapy.com/zakladni?q=Vila%20Bellevue%20Luha%C4%8Dovice" target="_blank" rel="noopener">Mapy.cz</a>.
-            </p>
 
             <div class="stays">
                 <div class="card">
@@ -195,10 +219,25 @@
                 </div>
 
                 <div class="card">
+                    <h3>Hotel Vincent</h3>
+                    <p class="stay-address">Hradisko 467, Luhačovice, 763 26</p>
+                    <p class="stay-meta">
+                        <span>Kdo tam spí: Kiki + Vašek + Natálka</span><br>
+                        <span>Telefon: <a href="tel:+420720072780">+420 720 072 780</a></span><br>
+                        <span>Web: <a href="https://vincentluhacovice.cz/" target="_blank" rel="noopener">vincentluhacovice.cz</a></span>
+                    </p>
+                    <p class="stay-link">
+                        <a href="https://maps.google.com/maps?q=Hradisko%20467%2C%20Luha%C4%8Dovice%20763%2026&amp;z=17&amp;hl=cs" target="_blank" rel="noopener">Mapa</a>
+                        ·
+                        <a href="https://www.booking.com/searchresults.cs.html?ss=Hotel%20Vincent%20Luha%C4%8Dovice&amp;selected_currency=CZK" target="_blank" rel="noopener">Fotky a rezervace na Booking.com</a>
+                    </p>
+                </div>
+
+                <div class="card">
                     <h3>Ostatní</h3>
                     <p class="stay-address">Ubytování si každý řeší sám</p>
                     <p class="stay-meta">
-                        <span>Zatím potvrzení jen Manželé Paprčkovi.</span><br>
+                        <span>Potvrzená ubytování: vila Bellevue a Hotel Vincent.</span><br>
                         <span>Hledej něco blízko kolonády, ať se dá všude dojít pěšky.</span>
                     </p>
                 </div>
@@ -212,6 +251,7 @@
             <p class="section-lead">
                 Kdo jede — po skupinkách, jak se spolu domlouváme.
                 Pořadí nic neznamená, všichni jsou na stejné lodi.
+                Zelená fajfka znamená potvrzeno, zbytek se ještě domlouvá.
             </p>
 
             <ul class="teams">
@@ -219,13 +259,15 @@
                     <span class="team-name">Žantetka + 3</span>
                     <span class="team-note">4 lidé</span>
                 </li>
-                <li class="team">
+                <li class="team is-confirmed">
                     <span class="team-name">Manželé Paprčkovi</span>
-                    <span class="team-note">2 lidé</span>
+                    <span class="team-note">2 lidé · vila Bellevue</span>
+                    <span class="team-status"><span class="team-check" aria-hidden="true">✓</span> Potvrzeno</span>
                 </li>
-                <li class="team">
-                    <span class="team-name">Kiki + Vašík + Lili</span>
-                    <span class="team-note">2,5 holky</span>
+                <li class="team is-confirmed">
+                    <span class="team-name">Kiki + Vašík + Lili + Natálka</span>
+                    <span class="team-note">3,5 holky · Hotel Vincent</span>
+                    <span class="team-status"><span class="team-check" aria-hidden="true">✓</span> Potvrzeno</span>
                 </li>
                 <li class="team">
                     <span class="team-name">Honzík + Maryša</span>
@@ -234,10 +276,6 @@
                 <li class="team">
                     <span class="team-name">Káťa + Dominik</span>
                     <span class="team-note">2 lidé</span>
-                </li>
-                <li class="team">
-                    <span class="team-name">Natálka + ?</span>
-                    <span class="team-note">poloha nezjištěná</span>
                 </li>
             </ul>
         </section>

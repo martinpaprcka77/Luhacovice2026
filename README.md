@@ -25,6 +25,10 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
 
 - **Přidat tým** — zkopíruj jeden `<li class="team">` v sekci `Týmy` a přepiš
   `<span class="team-name">` a `<span class="team-note">`. Ubírání funguje stejně.
+- **Označit tým jako potvrzený** — na `<li class="team">` přidej třídu
+  `is-confirmed` a dovnitř `<span class="team-status"><span class="team-check"
+  aria-hidden="true">✓</span> Potvrzeno</span>`. Karta dostane zelený rámeček,
+  zelený nádech a fajfku; bez třídy zůstane karta v běžné barvě.
 - **Doplnit telefon nebo e-mail** — použij odkaz, ať se to dá z mobilu
   rovnou vytukat: `<a href="tel:+420123456789">+420 123 456 789</a>`
   nebo `<a href="mailto:nekdo@example.com">nekdo@example.com</a>`.
@@ -35,9 +39,13 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
 - **Přidat řádek programu** — zkopíruj jeden `<li>` v `<ol class="timeline">`
   a přepiš `<span class="time">` a `<span class="what">`.
 - **Přidat ubytování** — zkopíruj jednu `<div class="card">` v `<div class="stays">`.
-- **Změnit mapu** — v sekci `Ubytování a mapa` je jediný `<iframe>`. Uvnitř je
-  Google Maps přes `output=embed`, což funguje bez API klíče. Mapy.cz se do rámce
-  vložit nedá (blokuje to), proto je pod mapou jen odkaz na něj.
+  Patří-li k němu i pin na mapě, zkopíruj v `<div class="maps">` ještě jeden
+  `<div class="map-block">` a přepiš popisek, `src` iframe a odkazy pod mapou.
+- **Změnit mapu** — v sekci `Ubytování a mapa` má každé ubytování vlastní
+  `<div class="map-block">` s `<iframe>`. Uvnitř je Google Maps přes
+  `output=embed`, což funguje bez API klíče; jeden rámec ale vždy ukáže jen
+  jeden pin, proto má každé místo vlastní mapu. Mapy.cz se do rámce vložit
+  nedá (blokuje to), proto je pod každou mapou jen odkaz na něj.
 
 Odkazy na vlastní soubory drž relativně (`./assets/...`). Stránka běží
 v podadresáři `/Luhacovice2026/`, takže absolutní cesta od rootu by se rozbila.
