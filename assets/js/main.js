@@ -95,4 +95,58 @@
             tik();
         }
     );
+
+    // ── Aktuality: rolující banner a čas posledního updatu ──────────────
+    // Text je v HTML jen jednou, druhá kopie se přidá tady, aby na sebe
+    // smyčka navazovala. Bez JS zůstane banner statický a čitelný.
+
+    var ticker = document.querySelector('.ticker');
+
+    if (ticker) {
+        var track = ticker.querySelector('.ticker-track');
+        var text = ticker.querySelector('.ticker-text');
+
+        if (track && text) {
+            var copy = text.cloneNode(true);
+            copy.setAttribute('aria-hidden', 'true');
+            track.appendChild(copy);
+            ticker.classList.add('is-running');
+        }
+
+        if (window.fetch) {
+            window.fetch('./assets/data/update.json', { cache: 'no-store' })
+                .then(function (response) {
+                    return response.ok ? response.json() : null;
+                })
+                .then(function (info) {
+                    if (!info) {
+                        return;
+                    }
+
+                    [['created', info.created], ['updated', info.updated]].forEach(function (pair) {
+                        if (!pair[1]) {
+                            return;
+                        }
+
+                        var when = new Date(pair[1]);
+                        if (isNaN(when.getTime())) {
+                            return;
+                        }
+
+                        var stamp = when.toLocaleDateString('cs-CZ') + ' ' +
+                            when.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
+
+                        Array.prototype.forEach.call(
+                            ticker.querySelectorAll('[data-' + pair[0] + ']'),
+                            function (el) {
+                                el.textContent = stamp;
+                            }
+                        );
+                    });
+                })
+                .catch(function () {
+                    // Ponecháme statický text z HTML.
+                });
+        }
+    }
 })();

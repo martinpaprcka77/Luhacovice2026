@@ -39,6 +39,23 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
 Odkazy na vlastní soubory drž relativně (`./assets/...`). Stránka běží
 v podadresáři `/Luhacovice2026/`, takže absolutní cesta od rootu by se rozbila.
 
+## Aktuality nahoře
+
+Úplně nahoře je rolující banner s datem vzniku, časem posledního updatu a
+poznámkou, ať si lidé stránku obnovují sami.
+
+- **Datum vzniku a čas posledního updatu** se počítají při nasazení z historie
+  gitu a zapisují se do `assets/data/update.json`. V repozitáři je základní
+  verze souboru, kterou CI při každém nasazení přepíše — díky tomu se nikdy
+  nenačítá prázdno a i když nasazení selže, zůstane poslední známý čas.
+- **Když soubor chybí nebo je vypnutý JavaScript**, zůstane v banneru statický
+  text z HTML — banner se jen neroluje. Nic se neztratí.
+- **Text banneru** je v `index.html` v sekci `Aktuality`, hned za odkazem
+  „Přeskočit na instrukce“. Věty jako „Další update nejpozději…“ jsou ruční,
+  přepiš je, kdykoli se změní.
+- Rolování se vypne, když má uživatel v systému `prefers-reduced-motion`.
+  Najetím myší nebo fokusem se banner pozastaví.
+
 ## Náhled lokálně
 
 Otevři `index.html` přímo v prohlížeči, nebo si spusť server, aby cesty seděly

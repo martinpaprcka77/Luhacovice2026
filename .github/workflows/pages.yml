@@ -26,9 +26,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Celá historie, abychom uměli datum prvního i posledního commitu.
+          fetch-depth: 0
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
+
+      - name: Zapsat datum vzniku a posledního updatu
+        run: |
+          mkdir -p assets/data
+          prvni=$(git log --reverse --format=%cI | head -n1)
+          posledni=$(git log -1 --format=%cI)
+          komit=$(git rev-parse --short HEAD)
+          printf '{"created":"%s","updated":"%s","commit":"%s"}' "$prvni" "$posledni" "$komit" > assets/data/update.json
+          cat assets/data/update.json
 
       - name: Upload the site as an artifact
         uses: actions/upload-pages-artifact@v3

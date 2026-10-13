@@ -646,11 +646,63 @@ a:hover {
     color: var(--green-700);
 }
 
-/* ── 20. Tisk ─────────────────────────────────────────────────────────── */
+/* ── 20. Aktuality (rolující banner) ──────────────────────────────────── */
+
+.ticker {
+    background: var(--green-700);
+    color: var(--cream);
+    border-bottom: 1px solid rgba(20, 48, 42, 0.35);
+    font-size: 14px;
+}
+
+.ticker-track {
+    display: flex;
+}
+
+.ticker-text {
+    padding: 10px 22px;
+}
+
+.ticker.is-running .ticker-track {
+    width: max-content;
+    animation: ticker-scroll 42s linear infinite;
+}
+
+.ticker.is-running .ticker-text {
+    white-space: nowrap;
+}
+
+.ticker.is-running:hover .ticker-track,
+.ticker.is-running:focus-within .ticker-track {
+    animation-play-state: paused;
+}
+
+@keyframes ticker-scroll {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ticker.is-running .ticker-track {
+        animation: none;
+    }
+
+    .ticker.is-running .ticker-text {
+        white-space: normal;
+    }
+}
+
+/* ── 21. Tisk ─────────────────────────────────────────────────────────── */
 
 @media print {
     .topbar,
     .hero-cta,
+    .ticker,
     .skip {
         display: none;
     }
