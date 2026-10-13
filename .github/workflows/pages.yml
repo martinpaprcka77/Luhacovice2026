@@ -41,6 +41,11 @@ jobs:
           komit=$(git rev-parse --short HEAD)
           printf '{"created":"%s","updated":"%s","commit":"%s"}' "$prvni" "$posledni" "$komit" > assets/data/update.json
           cat assets/data/update.json
+          # Cache-busting: bez tohoto si prohlížeč může držet starý CSS nebo JS
+          # a stránka pak vypadá staticky (přesně to se stalo u banneru).
+          sed -i -E "s#assets/css/style[.]css([?]v=[0-9a-f]+)?#assets/css/style.css?v=$komit#g" index.html
+          sed -i -E "s#assets/js/main[.]js([?]v=[0-9a-f]+)?#assets/js/main.js?v=$komit#g" index.html
+          grep -n 'assets/' index.html
 
       - name: Upload the site as an artifact
         uses: actions/upload-pages-artifact@v3

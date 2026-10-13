@@ -25,6 +25,9 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
 
 - **Přidat tým** — zkopíruj jeden `<li class="team">` v sekci `Týmy` a přepiš
   `<span class="team-name">` a `<span class="team-note">`. Ubírání funguje stejně.
+- **Doplnit telefon nebo e-mail** — použij odkaz, ať se to dá z mobilu
+  rovnou vytukat: `<a href="tel:+420123456789">+420 123 456 789</a>`
+  nebo `<a href="mailto:nekdo@example.com">nekdo@example.com</a>`.
 - **Změnit odpočet** — v `Hero` je u každé karty atribut `data-countdown`
   s cílovým datem ve tvaru `2026-10-23T12:00:00+02:00`. Přepiš ho a hotovo.
   Text uvnitř `<p class="countdown-clock">` je jen záloha pro čtenáře bez
