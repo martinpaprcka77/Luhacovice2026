@@ -395,9 +395,19 @@ a:hover {
     color: #3a4b43;
 }
 
+.timeline .time-highlight {
+    display: inline-block;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--green-100);
+    color: var(--green-900);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
 /* ── 11. Mapa ─────────────────────────────────────────────────────────── */
 
-/* Jedna mapa nad Luhačovicemi: kolonáda a penzion Karina.
+/* Jedna mapa nad Luhačovicemi: kolonáda, prameny, pošta, nádraží a penzion Karina.
    Kreslí ji Leaflet z CDN v `assets/js/main.js`; bez JavaScriptu zůstanou
    jen odkazy pod mapou. Google `output=embed` umí jen jeden pin. */
 
@@ -463,6 +473,50 @@ a:hover {
 .stay-address {
     margin: 0;
     font-weight: 600;
+}
+
+.walks {
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.walks li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(39, 80, 63, 0.12);
+}
+
+.walks li:last-child {
+    border-bottom: 0;
+}
+
+.walks strong {
+    color: var(--green-700);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.walks-note {
+    margin: 10px 0 0;
+    color: var(--ink-muted);
+    font-size: 0.9em;
+}
+
+.streetview {
+    margin-top: 18px;
+}
+
+.streetview iframe {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: 300px;
+    border: 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
 }
 
 .stay-meta {
