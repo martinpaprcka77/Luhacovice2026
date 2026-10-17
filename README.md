@@ -2,22 +2,10 @@
 
 Jednostránkový web k výletu do Luhačovic — instrukce, program, ubytování na mapě,
 týmy a kontakty. Žádný build: tři vlastní soubory a k tomu Leaflet z CDN kvůli
-mapě — jediná externí závislost, pinovaná verze se SRI.
+mapě — jediná externí závislost, pinovaná verze se SRI. Leaflet i jeho CSS se
+stahují až při scrollování k mapě, takže první načtení stránky je bez nich.
 
 Živě na <https://martinpaprcka77.github.io/Luhacovice2026/>.
-
-## Co ještě doplnit
-
-V `index.html` hledej `class="todo"`. Každý takový prvek je zástupný text,
-který se má nahradit skutečností:
-
-```bash
-grep -n 'class="todo"' index.html
-```
-
-Až budeš hotový, mělo by jich zbýt nula — teď jich je nula. Placeholder se
-v CSS schválně kreslí jako přerušovaný rámeček, takže nové „doplnit“ na stránce
-nepřeskočíš.
 
 ## Jak upravit obsah
 
@@ -43,9 +31,14 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
 - **Přidat ubytování** — zkopíruj jednu `<div class="card">` v `<div class="stays">`
   a přidej bod do pole `mista` v `assets/js/main.js`, ať má místo i pin na mapě.
 - **Změnit mapu** — mapa je Leaflet z CDN (`unpkg.com/leaflet@1.9.4`, se SRI)
-  a dlaždice z OpenStreetMap. V `assets/js/main.js` je v poli `mista` seznam bodů:
+  a dlaždice z OpenStreetMap. `assets/js/main.js` dotahuje Leaflet i jeho CSS
+  teprve tehdy, když se k mapě blíží scrollování (nebo hned, když prohlížeč
+  neumí `IntersectionObserver`), takže se při prvním načtení nic z CDN
+  nestahuje. V poli `mista` je seznam bodů:
   `nazev`, `popis`, `lat`, `lon` a nepovinné `kruh: true` pro kolečko místo pinu
-  (tak je vyznačená kolonáda). Mapa se vycentruje na všechny body, takže se drží
+  (tak je vyznačená kolonáda). Pěší trasy jsou v poli `trasy`; tři trasy na
+  kolonádu sdílejí prvních 18 bodů v `presKolonadu`, zbytek je u každé zvlášť.
+  Mapa se vycentruje na všechny body, takže se drží
   na Luhačovicích. Bez JavaScriptu nebo bez Leafletu zůstanou jen odkazy pod
   mapou — Google `output=embed` totiž umí jen jeden pin a Mapy.cz se do rámce
   vložit nedá (blokuje to).
@@ -97,7 +90,7 @@ Pokud ji chceš zviditelnit, ten řádek smaž.
 ```
 index.html                    celý obsah stránky
 assets/css/style.css          jediný stylesheet
-assets/js/main.js             výška horní lišty, aktivní sekce, odpočty a mapa (Leaflet)
+assets/js/main.js             výška lišty, aktivní sekce, odpočty a lazy mapa (Leaflet)
 assets/img/favicon.svg        ikona
 .github/workflows/pages.yml   nasazení na GitHub Pages
 ```

@@ -77,10 +77,22 @@
     Object.keys(linkById).forEach(function (id) {
         observer.observe(document.getElementById(id));
     });
+})();
 
-    // ── Odpočty do startu ───────────────────────────────────────────────
-    // Cíle jsou v HTML v atributu data-countdown, takže se datum mění na
-    // jednom místě. Bez JS zůstane uvnitř prvku statická věta o startu.
+// ── Odpočty do startu ─────────────────────────────────────────────────
+// Cíle jsou v HTML v atributu data-countdown, takže se datum mění na
+// jednom místě. Bez JS zůstane uvnitř prvku statická věta o startu.
+// Odpočet je schválně nezávislý na navigaci i na IntersectionObserveru,
+// aby fungoval i tam, kde observer chybí.
+
+(function () {
+    'use strict';
+
+    var clocks = document.querySelectorAll('.countdown-clock[data-countdown]');
+
+    if (!clocks.length) {
+        return;
+    }
 
     function ceskyPocet(n, jeden, par, hodne) {
         if (n === 1) {
@@ -96,111 +108,291 @@
                '</span>';
     }
 
-    Array.prototype.forEach.call(
-        document.querySelectorAll('.countdown-clock[data-countdown]'),
-        function (clock) {
-            var cil = new Date(clock.getAttribute('data-countdown')).getTime();
-            if (isNaN(cil)) {
+    Array.prototype.forEach.call(clocks, function (clock) {
+        var cil = new Date(clock.getAttribute('data-countdown')).getTime();
+
+        if (isNaN(cil)) {
+            return;
+        }
+
+        var bezi;
+
+        function tik() {
+            var zbyva = cil - Date.now();
+
+            if (zbyva <= 0) {
+                window.clearInterval(bezi);
+                clock.innerHTML = '<span class="countdown-done">Jedeme!</span>';
                 return;
             }
 
-            var tik = function () {
-                var zbyva = cil - Date.now();
+            var s = Math.floor(zbyva / 1000);
+            var dny = Math.floor(s / 86400);
+            s -= dny * 86400;
+            var hod = Math.floor(s / 3600);
+            s -= hod * 3600;
+            var min = Math.floor(s / 60);
+            var sek = s - min * 60;
 
-                if (zbyva <= 0) {
-                    window.clearInterval(bezi);
-                    clock.innerHTML = '<span class="countdown-done">Jedeme!</span>';
-                    return;
-                }
-
-                var s = Math.floor(zbyva / 1000);
-                var dny = Math.floor(s / 86400);
-                s -= dny * 86400;
-                var hod = Math.floor(s / 3600);
-                s -= hod * 3600;
-                var min = Math.floor(s / 60);
-                var sek = s - min * 60;
-
-                clock.innerHTML =
-                    bunka(dny, ceskyPocet(dny, 'den', 'dny', 'dní')) +
-                    bunka(hod, ceskyPocet(hod, 'hodina', 'hodiny', 'hodin')) +
-                    bunka(min, ceskyPocet(min, 'minuta', 'minuty', 'minut')) +
-                    bunka(sek, ceskyPocet(sek, 'sekunda', 'sekundy', 'sekund'));
-            };
-
-            var bezi = window.setInterval(tik, 1000);
-            tik();
+            clock.innerHTML =
+                bunka(dny, ceskyPocet(dny, 'den', 'dny', 'dní')) +
+                bunka(hod, ceskyPocet(hod, 'hodina', 'hodiny', 'hodin')) +
+                bunka(min, ceskyPocet(min, 'minuta', 'minuty', 'minut')) +
+                bunka(sek, ceskyPocet(sek, 'sekunda', 'sekundy', 'sekund'));
         }
-    );
 
-    // ── Aktuality: rolující banner a čas posledního updatu ──────────────
-    // Text je v HTML jen jednou, druhá kopie se přidá tady, aby na sebe
-    // smyčka navazovala. Bez JS zůstane banner statický a čitelný.
+        bezi = window.setInterval(tik, 1000);
+        tik();
+    });
+})();
+
+// ── Aktuality: rolující banner a čas posledního updatu ────────────────
+// Text je v HTML jen jednou, druhá kopie se přidá tady, aby na sebe
+// smyčka navazovala. Bez JS zůstane banner statický a čitelný.
+
+(function () {
+    'use strict';
 
     var ticker = document.querySelector('.ticker');
 
-    if (ticker) {
-        var track = ticker.querySelector('.ticker-track');
-        var text = ticker.querySelector('.ticker-text');
-
-        if (track && text) {
-            var copy = text.cloneNode(true);
-            copy.setAttribute('aria-hidden', 'true');
-            track.appendChild(copy);
-            ticker.classList.add('is-running');
-        }
-
-        if (window.fetch) {
-            window.fetch('./assets/data/update.json', { cache: 'no-store' })
-                .then(function (response) {
-                    return response.ok ? response.json() : null;
-                })
-                .then(function (info) {
-                    if (!info) {
-                        return;
-                    }
-
-                    [['created', info.created], ['updated', info.updated]].forEach(function (pair) {
-                        if (!pair[1]) {
-                            return;
-                        }
-
-                        var when = new Date(pair[1]);
-                        if (isNaN(when.getTime())) {
-                            return;
-                        }
-
-                        var stamp = when.toLocaleDateString('cs-CZ') + ' ' +
-                            when.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
-
-                        Array.prototype.forEach.call(
-                            ticker.querySelectorAll('[data-' + pair[0] + ']'),
-                            function (el) {
-                                el.textContent = stamp;
-                            }
-                        );
-                    });
-                })
-                .catch(function () {
-                    // Ponecháme statický text z HTML.
-                });
-        }
+    if (!ticker) {
+        return;
     }
+
+    var track = ticker.querySelector('.ticker-track');
+    var text = ticker.querySelector('.ticker-text');
+
+    if (track && text) {
+        var copy = text.cloneNode(true);
+        copy.setAttribute('aria-hidden', 'true');
+        track.appendChild(copy);
+        ticker.classList.add('is-running');
+    }
+
+    if (!window.fetch) {
+        return;
+    }
+
+    window.fetch('./assets/data/update.json', { cache: 'no-store' })
+        .then(function (response) {
+            return response.ok ? response.json() : null;
+        })
+        .then(function (info) {
+            if (!info) {
+                return;
+            }
+
+            [['created', info.created], ['updated', info.updated]].forEach(function (pair) {
+                if (!pair[1]) {
+                    return;
+                }
+
+                var when = new Date(pair[1]);
+                if (isNaN(when.getTime())) {
+                    return;
+                }
+
+                var stamp = when.toLocaleDateString('cs-CZ') + ' ' +
+                    when.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
+
+                Array.prototype.forEach.call(
+                    ticker.querySelectorAll('[data-' + pair[0] + ']'),
+                    function (el) {
+                        el.textContent = stamp;
+                    }
+                );
+            });
+        })
+        .catch(function () {
+            // Ponecháme statický text z HTML.
+        });
 })();
 
-// ── Mapa ───────────────────────────────────────────────────────────────
-// Jedna mapa nad Luhačovicemi: kolonáda, prameny, pošta, nádraží a penzion Karina.
-// Kreslí ji Leaflet z CDN; když se nenačte, zůstanou odkazy pod mapou.
-// Souřadnice jsou z OpenStreetMap, takže se dají kdykoli dohledat.
+// ── Mapa ──────────────────────────────────────────────────────────────
+// Jedna mapa nad Luhačovicemi: kolonáda, prameny, pošta, nádraží a penzion
+// Karina. Leaflet i jeho CSS se stahují až ve chvíli, kdy se k mapě blíží
+// scrollování — do té doby se neplatí ani jeden požadavek na CDN ani na
+// dlaždice. Když se nenačte, zůstanou odkazy pod mapou. Souřadnice jsou
+// z OpenStreetMap, takže se dají kdykoli dohledat.
 
 (function () {
     'use strict';
 
     var mapa = document.getElementById('mapa');
 
-    if (!mapa || typeof window.L === 'undefined') {
+    if (!mapa) {
         return;
     }
+
+    var LEAFTLET_CSS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    var LEAFTLET_JS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    var SRI_CSS = 'sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=';
+    var SRI_JS = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=';
+    var zacato = false;
+
+    // Prvních 18 bodů je pro tři trasy na kolonádu stejných, takže se drží
+    // zvlášť a každá trasa k nim jen přidá svůj zbytek.
+    var presKolonadu = [
+        [49.0995, 17.75728],
+        [49.09982, 17.75783],
+        [49.10016, 17.7584],
+        [49.10047, 17.75895],
+        [49.10064, 17.75932],
+        [49.10065, 17.75934],
+        [49.10091, 17.76002],
+        [49.101, 17.76029],
+        [49.10102, 17.76026],
+        [49.10104, 17.76023],
+        [49.10105, 17.76021],
+        [49.10107, 17.76018],
+        [49.10108, 17.76016],
+        [49.1011, 17.76013],
+        [49.10113, 17.76009],
+        [49.10125, 17.76016],
+        [49.10137, 17.76022],
+        [49.1014, 17.7602],
+    ];
+
+    var trasy = [
+        { nazev: 'Kolonáda a prameny', vzdalenost: '1,0 km', cas: '14 min', body: presKolonadu.concat([
+            [49.10153, 17.76014],
+            [49.10167, 17.76007],
+            [49.10174, 17.76004],
+            [49.10178, 17.76001],
+            [49.10178, 17.76003],
+            [49.10193, 17.75997],
+            [49.10208, 17.75989],
+            [49.10209, 17.75989],
+            [49.10215, 17.75986],
+            [49.10217, 17.75986],
+            [49.10228, 17.75981],
+            [49.10252, 17.7598],
+            [49.10273, 17.75979],
+            [49.10279, 17.75979],
+            [49.10297, 17.75981],
+            [49.10323, 17.75982],
+            [49.10354, 17.75985],
+            [49.10366, 17.75986],
+            [49.10382, 17.75986],
+            [49.10387, 17.75986],
+            [49.1039, 17.75986],
+            [49.10389, 17.75994],
+            [49.10403, 17.76003],
+            [49.10431, 17.76011],
+            [49.1046, 17.76026],
+            [49.10493, 17.76044],
+            [49.10495, 17.76046],
+            [49.1052, 17.76057],
+            [49.10537, 17.76071],
+            [49.10539, 17.76073],
+            [49.10551, 17.76085],
+            [49.10564, 17.76099],
+            [49.10571, 17.76108],
+            [49.10618, 17.76169],
+            [49.10621, 17.76174],
+            [49.10629, 17.76174],
+            [49.10655, 17.76137],
+            [49.10657, 17.76133],
+            [49.10672, 17.76156],
+            [49.1068, 17.76168],
+            [49.1071, 17.7621],
+        ]) },
+        { nazev: 'Pramen Ottovka', vzdalenost: '0,9 km', cas: '12 min', body: presKolonadu.concat([
+            [49.10153, 17.76014],
+            [49.10167, 17.76007],
+            [49.10174, 17.76004],
+            [49.10178, 17.76001],
+            [49.10178, 17.76003],
+            [49.10193, 17.75997],
+            [49.10208, 17.75989],
+            [49.10209, 17.75989],
+            [49.10215, 17.75986],
+            [49.10217, 17.75986],
+            [49.10228, 17.75981],
+            [49.10252, 17.7598],
+            [49.10273, 17.75979],
+            [49.10279, 17.75979],
+            [49.10297, 17.75981],
+            [49.10323, 17.75982],
+            [49.10354, 17.75985],
+            [49.10366, 17.75986],
+            [49.10382, 17.75986],
+            [49.10387, 17.75986],
+            [49.1039, 17.75986],
+            [49.10414, 17.75985],
+            [49.10419, 17.75985],
+            [49.10421, 17.75985],
+            [49.10431, 17.75982],
+            [49.10453, 17.75975],
+            [49.10457, 17.75975],
+            [49.10476, 17.75971],
+            [49.10496, 17.75965],
+            [49.10513, 17.7596],
+            [49.10542, 17.75952],
+            [49.10545, 17.75945],
+            [49.10555, 17.75931],
+            [49.10557, 17.75928],
+            [49.10556, 17.75916],
+            [49.10567, 17.75898],
+            [49.10566, 17.75887],
+            [49.10568, 17.75879],
+            [49.10567, 17.75876],
+            [49.1057, 17.75871],
+            [49.10576, 17.75858],
+            [49.1058, 17.75861],
+        ]) },
+        { nazev: 'Pošta', vzdalenost: '0,4 km', cas: '5 min', body: presKolonadu.concat([
+            [49.10141, 17.76016],
+            [49.10142, 17.76013],
+            [49.10148, 17.76],
+            [49.10152, 17.75993],
+            [49.10149, 17.75991],
+            [49.10148, 17.7599],
+            [49.1015, 17.7598],
+            [49.10151, 17.75976],
+            [49.10169, 17.75976],
+        ]) },
+        { nazev: 'Nádraží', vzdalenost: '0,5 km', cas: '7 min', body: [
+            [49.0995, 17.75728],
+            [49.09934, 17.75701],
+            [49.09938, 17.75696],
+            [49.09942, 17.75689],
+            [49.09936, 17.7568],
+            [49.09913, 17.75616],
+            [49.09913, 17.75613],
+            [49.09912, 17.75601],
+            [49.09905, 17.75579],
+            [49.09901, 17.75567],
+            [49.099, 17.75564],
+            [49.09892, 17.75534],
+            [49.0989, 17.75529],
+            [49.09879, 17.75502],
+            [49.09837, 17.75416],
+            [49.09836, 17.7541],
+            [49.09833, 17.75399],
+            [49.09835, 17.75394],
+            [49.09832, 17.75387],
+            [49.09829, 17.7538],
+            [49.09831, 17.75377],
+            [49.09842, 17.75358],
+            [49.0987, 17.7531],
+            [49.09875, 17.75302],
+            [49.0987, 17.75272],
+            [49.09875, 17.75269],
+            [49.09877, 17.75268],
+            [49.0988, 17.75267],
+            [49.09883, 17.75265],
+            [49.09882, 17.75264],
+            [49.09866, 17.7519],
+            [49.09866, 17.75188],
+            [49.09876, 17.75183],
+            [49.09878, 17.75182],
+            [49.09874, 17.75164],
+            [49.09876, 17.75163],
+            [49.09877, 17.75162],
+            [49.09885, 17.752],
+        ] },
+    ];
 
     var mista = [
         { nazev: 'Kolonáda a prameny', popis: 'Vincentka a spol. — pije se přímo na místě.', lat: 49.10680, lon: 17.76259, kruh: true },
@@ -231,79 +423,118 @@
             popupAnchor: [0, -40]
         });
     }
-    var trasy = [
-        { nazev: 'Kolonáda a prameny', vzdalenost: '1,0 km', cas: '14 min', body: [[49.09950, 17.75728], [49.09982, 17.75783], [49.10016, 17.75840], [49.10047, 17.75895], [49.10064, 17.75932], [49.10065, 17.75934], [49.10091, 17.76002], [49.10100, 17.76029], [49.10102, 17.76026], [49.10104, 17.76023], [49.10105, 17.76021], [49.10107, 17.76018], [49.10108, 17.76016], [49.10110, 17.76013], [49.10113, 17.76009], [49.10125, 17.76016], [49.10137, 17.76022], [49.10140, 17.76020], [49.10153, 17.76014], [49.10167, 17.76007], [49.10174, 17.76004], [49.10178, 17.76001], [49.10178, 17.76003], [49.10193, 17.75997], [49.10208, 17.75989], [49.10209, 17.75989], [49.10215, 17.75986], [49.10217, 17.75986], [49.10228, 17.75981], [49.10252, 17.75980], [49.10273, 17.75979], [49.10279, 17.75979], [49.10297, 17.75981], [49.10323, 17.75982], [49.10354, 17.75985], [49.10366, 17.75986], [49.10382, 17.75986], [49.10387, 17.75986], [49.10390, 17.75986], [49.10389, 17.75994], [49.10403, 17.76003], [49.10431, 17.76011], [49.10460, 17.76026], [49.10493, 17.76044], [49.10495, 17.76046], [49.10520, 17.76057], [49.10537, 17.76071], [49.10539, 17.76073], [49.10551, 17.76085], [49.10564, 17.76099], [49.10571, 17.76108], [49.10618, 17.76169], [49.10621, 17.76174], [49.10629, 17.76174], [49.10655, 17.76137], [49.10657, 17.76133], [49.10672, 17.76156], [49.10680, 17.76168], [49.10710, 17.76210]] },
-        { nazev: 'Pramen Ottovka', vzdalenost: '0,9 km', cas: '12 min', body: [[49.09950, 17.75728], [49.09982, 17.75783], [49.10016, 17.75840], [49.10047, 17.75895], [49.10064, 17.75932], [49.10065, 17.75934], [49.10091, 17.76002], [49.10100, 17.76029], [49.10102, 17.76026], [49.10104, 17.76023], [49.10105, 17.76021], [49.10107, 17.76018], [49.10108, 17.76016], [49.10110, 17.76013], [49.10113, 17.76009], [49.10125, 17.76016], [49.10137, 17.76022], [49.10140, 17.76020], [49.10153, 17.76014], [49.10167, 17.76007], [49.10174, 17.76004], [49.10178, 17.76001], [49.10178, 17.76003], [49.10193, 17.75997], [49.10208, 17.75989], [49.10209, 17.75989], [49.10215, 17.75986], [49.10217, 17.75986], [49.10228, 17.75981], [49.10252, 17.75980], [49.10273, 17.75979], [49.10279, 17.75979], [49.10297, 17.75981], [49.10323, 17.75982], [49.10354, 17.75985], [49.10366, 17.75986], [49.10382, 17.75986], [49.10387, 17.75986], [49.10390, 17.75986], [49.10414, 17.75985], [49.10419, 17.75985], [49.10421, 17.75985], [49.10431, 17.75982], [49.10453, 17.75975], [49.10457, 17.75975], [49.10476, 17.75971], [49.10496, 17.75965], [49.10513, 17.75960], [49.10542, 17.75952], [49.10545, 17.75945], [49.10555, 17.75931], [49.10557, 17.75928], [49.10556, 17.75916], [49.10567, 17.75898], [49.10566, 17.75887], [49.10568, 17.75879], [49.10567, 17.75876], [49.10570, 17.75871], [49.10576, 17.75858], [49.10580, 17.75861]] },
-        { nazev: 'Pošta', vzdalenost: '0,4 km', cas: '5 min', body: [[49.09950, 17.75728], [49.09982, 17.75783], [49.10016, 17.75840], [49.10047, 17.75895], [49.10064, 17.75932], [49.10065, 17.75934], [49.10091, 17.76002], [49.10100, 17.76029], [49.10102, 17.76026], [49.10104, 17.76023], [49.10105, 17.76021], [49.10107, 17.76018], [49.10108, 17.76016], [49.10110, 17.76013], [49.10113, 17.76009], [49.10125, 17.76016], [49.10137, 17.76022], [49.10140, 17.76020], [49.10141, 17.76016], [49.10142, 17.76013], [49.10148, 17.76000], [49.10152, 17.75993], [49.10149, 17.75991], [49.10148, 17.75990], [49.10150, 17.75980], [49.10151, 17.75976], [49.10169, 17.75976]] },
-        { nazev: 'Nádraží', vzdalenost: '0,5 km', cas: '7 min', body: [[49.09950, 17.75728], [49.09934, 17.75701], [49.09938, 17.75696], [49.09942, 17.75689], [49.09936, 17.75680], [49.09913, 17.75616], [49.09913, 17.75613], [49.09912, 17.75601], [49.09905, 17.75579], [49.09901, 17.75567], [49.09900, 17.75564], [49.09892, 17.75534], [49.09890, 17.75529], [49.09879, 17.75502], [49.09837, 17.75416], [49.09836, 17.75410], [49.09833, 17.75399], [49.09835, 17.75394], [49.09832, 17.75387], [49.09829, 17.75380], [49.09831, 17.75377], [49.09842, 17.75358], [49.09870, 17.75310], [49.09875, 17.75302], [49.09870, 17.75272], [49.09875, 17.75269], [49.09877, 17.75268], [49.09880, 17.75267], [49.09883, 17.75265], [49.09882, 17.75264], [49.09866, 17.75190], [49.09866, 17.75188], [49.09876, 17.75183], [49.09878, 17.75182], [49.09874, 17.75164], [49.09876, 17.75163], [49.09877, 17.75162], [49.09885, 17.75200]] },
-    ];
 
-    var map = window.L.map(mapa, {
-        // Kolečko myši ať roluje stránkou, ne mapou.
-        scrollWheelZoom: false
-    });
-
-    window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
-
-    // Pěší trasy z penzionu: bílý podklad pro kontrast a přes něj čárkovaná
-    // čára s vzdáleností a časem v bublině.
-    trasy.forEach(function (trasa) {
-        window.L.polyline(trasa.body, {
-            color: '#fffdf7',
-            weight: 7,
-            opacity: 0.9,
-            lineCap: 'round',
-            interactive: false
-        }).addTo(map);
-
-        window.L.polyline(trasa.body, {
-            color: '#a8823f',
-            weight: 3,
-            opacity: 0.95,
-            dashArray: '7 8',
-            lineCap: 'round'
-        }).addTo(map).bindPopup(
-            '<strong>Penzion Karina → ' + trasa.nazev + '</strong><br>' +
-            trasa.vzdalenost + ' · ' + trasa.cas
-        );
-    });
-
-    var body = [];
-
-    mista.forEach(function (misto) {
-        var souradnice = [misto.lat, misto.lon];
-        var znacka;
-
-        if (misto.kruh) {
-            // Kolonáda je bod v krajině, ne ubytování — proto kolečko s popiskem.
-            znacka = window.L.circleMarker(souradnice, {
-                radius: 9,
-                color: '#27503f',
-                weight: 3,
-                fillColor: '#d8bb80',
-                fillOpacity: 1
-            }).addTo(map);
-
-            znacka.bindTooltip('Kolonáda', {
-                permanent: true,
-                direction: 'right',
-                offset: [10, 0]
-            });
-        } else {
-            znacka = window.L.marker(souradnice, {
-                alt: misto.nazev,
-                title: misto.nazev,
-                icon: misto.ikona ? vytvorIkonu(misto.ikona) : new window.L.Icon.Default()
-            }).addTo(map);
+    function kresliMapu() {
+        if (typeof window.L === 'undefined') {
+            return;
         }
 
-        znacka.bindPopup('<strong>' + misto.nazev + '</strong><br>' + misto.popis);
-        body.push(souradnice);
-    });
+        var map = window.L.map(mapa, {
+            // Kolečko myši ať roluje stránkou, ne mapou.
+            scrollWheelZoom: false
+        });
 
-    // Vycentrováno na Luhačovice: všechny body leží ve městě.
-    map.fitBounds(body, { padding: [28, 28] });
+        window.L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        // Pěší trasy z penzionu: bílý podklad pro kontrast a přes něj čárkovaná
+        // čára s vzdáleností a časem v bublině.
+        trasy.forEach(function (trasa) {
+            window.L.polyline(trasa.body, {
+                color: '#fffdf7',
+                weight: 7,
+                opacity: 0.9,
+                lineCap: 'round',
+                interactive: false
+            }).addTo(map);
+
+            window.L.polyline(trasa.body, {
+                color: '#a8823f',
+                weight: 3,
+                opacity: 0.95,
+                dashArray: '7 8',
+                lineCap: 'round'
+            }).addTo(map).bindPopup(
+                '<strong>Penzion Karina → ' + trasa.nazev + '</strong><br>' +
+                trasa.vzdalenost + ' · ' + trasa.cas
+            );
+        });
+
+        var body = [];
+
+        mista.forEach(function (misto) {
+            var souradnice = [misto.lat, misto.lon];
+            var znacka;
+
+            if (misto.kruh) {
+                // Kolonáda je bod v krajině, ne ubytování — proto kolečko s popiskem.
+                znacka = window.L.circleMarker(souradnice, {
+                    radius: 9,
+                    color: '#27503f',
+                    weight: 3,
+                    fillColor: '#d8bb80',
+                    fillOpacity: 1
+                }).addTo(map);
+
+                znacka.bindTooltip('Kolonáda', {
+                    permanent: true,
+                    direction: 'right',
+                    offset: [10, 0]
+                });
+            } else {
+                znacka = window.L.marker(souradnice, {
+                    alt: misto.nazev,
+                    title: misto.nazev,
+                    icon: misto.ikona ? vytvorIkonu(misto.ikona) : new window.L.Icon.Default()
+                }).addTo(map);
+            }
+
+            znacka.bindPopup('<strong>' + misto.nazev + '</strong><br>' + misto.popis);
+            body.push(souradnice);
+        });
+
+        // Vycentrováno na Luhačovice: všechny body leží ve městě.
+        map.fitBounds(body, { padding: [28, 28] });
+    }
+
+    function nactiLeaflet() {
+        if (zacato) {
+            return;
+        }
+        zacato = true;
+
+        var styl = document.createElement('link');
+        styl.rel = 'stylesheet';
+        styl.href = LEAFTLET_CSS;
+        styl.integrity = SRI_CSS;
+        styl.crossOrigin = '';
+        document.head.appendChild(styl);
+
+        var skript = document.createElement('script');
+        skript.src = LEAFTLET_JS;
+        skript.integrity = SRI_JS;
+        skript.crossOrigin = '';
+        skript.onload = kresliMapu;
+        document.head.appendChild(skript);
+    }
+
+    // Načti Leaflet, až když se k mapě blíží scrollování (nebo hned, když
+    // prohlížeč IntersectionObserver neumí). Do té doby je stránka lehká.
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            for (var i = 0; i < entries.length; i++) {
+                if (entries[i].isIntersecting) {
+                    observer.disconnect();
+                    nactiLeaflet();
+                    return;
+                }
+            }
+        }, { rootMargin: '400px 0px' });
+
+        observer.observe(mapa);
+    } else {
+        nactiLeaflet();
+    }
 })();

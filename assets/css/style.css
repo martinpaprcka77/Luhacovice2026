@@ -10,19 +10,13 @@
     --green-900: #14302a;
     --green-700: #27503f;
     --green-600: #33604c;
-    --green-300: #9dbfab;
     --green-100: #dfe9e1;
     --brass: #a8823f;
-    --brass-light: #d8bb80;
     --cream: #fbf7ee;
-    --sand: #ecdfc8;
-    --sand-deep: #d9c6a3;
     --ink: #22302a;
     --ink-muted: #667a70;
 
-    --card-bg: linear-gradient(165deg, #fffdf7 0%, #f6efe0 55%, #ecdfc8 100%);
     --shadow: 0 10px 28px rgba(30, 60, 48, 0.14);
-    --shadow-sm: 0 3px 10px rgba(30, 60, 48, 0.1);
     --radius: 14px;
     --measure: 880px;
     --topbar-h: 61px;
@@ -226,6 +220,82 @@ a:hover {
     color: #33443c;
 }
 
+/* ── 6. Odpočty do startu ─────────────────────────────────────────────── */
+
+.countdowns {
+    display: grid;
+    gap: 12px;
+    max-width: 680px;
+    margin: 26px auto 24px;
+    text-align: left;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.countdown {
+    padding: 16px 18px;
+    border: 1px solid rgba(39, 80, 63, 0.14);
+    border-radius: var(--radius);
+    background: rgba(255, 253, 248, 0.9);
+}
+
+.countdown-who {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green-900);
+}
+
+.countdown-when {
+    display: block;
+    margin: 2px 0 10px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+
+.countdown-clock {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+
+.cd-cell {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    min-width: 0;
+    padding: 0;
+    background: none;
+}
+
+.cd-value {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--green-900);
+    font-variant-numeric: tabular-nums;
+}
+
+.cd-unit {
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    text-transform: lowercase;
+    color: var(--ink-muted);
+}
+
+.countdown-done {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green-700);
+}
+
 /* ── 7. Sekce ─────────────────────────────────────────────────────────── */
 
 .section {
@@ -262,7 +332,10 @@ a:hover {
     color: var(--ink-muted);
 }
 
-.section p {
+/* Základní odsazení odstavců v sekcích. Nulová specificita přes :where(),
+   aby tenhle obecný selektor nepřebil konkrétnější třídy typu
+   `.section-lead`, `.map-actions` nebo `.stay-link`. */
+:where(.section) p {
     margin: 0 0 14px;
 }
 
@@ -649,23 +722,7 @@ a:hover {
     font-size: 16px;
 }
 
-/* ── 15. Placeholder pro doplnění ─────────────────────────────────────── */
-
-.todo {
-    display: inline-block;
-    padding: 2px 11px;
-    border: 1px dashed var(--brass);
-    border-radius: 999px;
-    background: rgba(216, 187, 128, 0.24);
-    color: #8a6a2c;
-    font-family: var(--font-body);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1.4px;
-    text-transform: uppercase;
-}
-
-/* ── 16. Patička ──────────────────────────────────────────────────────── */
+/* ── 15. Patička ──────────────────────────────────────────────────────── */
 
 .foot {
     padding: 30px 22px calc(30px + var(--safe-bottom));
@@ -687,7 +744,7 @@ a:hover {
     margin: 0;
 }
 
-/* ── 17. Větší obrazovky ──────────────────────────────────────────────── */
+/* ── 16. Větší obrazovky ──────────────────────────────────────────────── */
 
 @media (min-width: 720px) {
     .section {
@@ -699,7 +756,7 @@ a:hover {
     }
 }
 
-/* ── 18. Respektovat omezení pohybu ───────────────────────────────────── */
+/* ── 17. Respektovat omezení pohybu ───────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
     html {
@@ -707,83 +764,7 @@ a:hover {
     }
 }
 
-/* ── 19. Odpočty do startu ────────────────────────────────────────────── */
-
-.countdowns {
-    display: grid;
-    gap: 12px;
-    max-width: 680px;
-    margin: 26px auto 24px;
-    text-align: left;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.countdown {
-    padding: 16px 18px;
-    border: 1px solid rgba(39, 80, 63, 0.14);
-    border-radius: var(--radius);
-    background: rgba(255, 253, 248, 0.9);
-}
-
-.countdown-who {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--green-900);
-}
-
-.countdown-when {
-    display: block;
-    margin: 2px 0 10px;
-    font-size: 13px;
-    line-height: 1.4;
-    color: var(--ink-muted);
-}
-
-.countdown-clock {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 16px;
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.4;
-    color: var(--ink-muted);
-}
-
-.cd-cell {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-    min-width: 0;
-    padding: 0;
-    background: none;
-}
-
-.cd-value {
-    font-family: var(--font-display);
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--green-900);
-    font-variant-numeric: tabular-nums;
-}
-
-.cd-unit {
-    font-size: 11px;
-    letter-spacing: 0.3px;
-    text-transform: lowercase;
-    color: var(--ink-muted);
-}
-
-.countdown-done {
-    font-family: var(--font-display);
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--green-700);
-}
-
-/* ── 20. Aktuality (rolující banner) ──────────────────────────────────── */
+/* ── 18. Aktuality (rolující banner) ──────────────────────────────────── */
 
 /* Rolující pás je širší než okno, takže se musí odstřihnout tady v banneru.
    Do `overflow-x: hidden` na html/body to nepatří: každý předek se tím stane
@@ -839,12 +820,15 @@ a:hover {
     }
 }
 
-/* ── 21. Tisk ─────────────────────────────────────────────────────────── */
+/* ── 19. Tisk ─────────────────────────────────────────────────────────── */
 
 @media print {
     .topbar,
     .ticker,
-    .skip {
+    .skip,
+    .countdowns,
+    .map-frame,
+    .streetview {
         display: none;
     }
 
