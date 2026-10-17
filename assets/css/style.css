@@ -58,10 +58,7 @@ body {
     font-size: 17px;
     line-height: 1.6;
     color: var(--ink);
-    background:
-        radial-gradient(120% 55% at 5% -10%, rgba(63, 113, 89, 0.22), transparent 58%),
-        radial-gradient(120% 60% at 100% 12%, rgba(216, 187, 128, 0.32), transparent 55%),
-        linear-gradient(180deg, #f8f3e7 0%, #f2ead9 45%, #eadec7 100%);
+    background: linear-gradient(180deg, #faf6ec 0%, #f4edde 45%, #efe5d2 100%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
 }
@@ -168,14 +165,9 @@ a:hover {
     position: relative;
     overflow: hidden;
     text-align: center;
-    padding: 46px 22px 52px;
-    background:
-        radial-gradient(85% 55% at 50% 0%, rgba(255, 253, 246, 0.95), transparent 62%),
-        radial-gradient(60% 45% at 50% 36%, rgba(216, 187, 128, 0.4), transparent 70%),
-        radial-gradient(120% 120% at 50% 128%, rgba(51, 96, 76, 0.5), transparent 58%),
-        linear-gradient(165deg, #f4efe0 0%, #e9e0c9 52%, #d8cbab 100%);
-    border-bottom: 1px solid rgba(39, 80, 63, 0.28);
-    box-shadow: inset 0 -18px 30px -20px rgba(20, 48, 42, 0.45);
+    padding: 52px 22px 48px;
+    background: linear-gradient(180deg, #fffdf7 0%, #f2e8d5 100%);
+    border-bottom: 1px solid rgba(39, 80, 63, 0.14);
     scroll-margin-top: var(--topbar-h);
 }
 
@@ -196,10 +188,7 @@ a:hover {
     line-height: 1.08;
     letter-spacing: 0.5px;
     color: var(--green-900);
-    text-shadow:
-        0 1px 0 #fff,
-        0 3px 0 rgba(255, 255, 255, 0.6),
-        0 7px 18px rgba(20, 48, 42, 0.22);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .hero-year {
@@ -237,46 +226,23 @@ a:hover {
     color: #33443c;
 }
 
-.hero-cta {
-    margin: 0;
-}
-
-/* ── 6. Tlačítko ──────────────────────────────────────────────────────── */
-
-.btn {
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: 999px;
-    background: var(--green-700);
-    color: var(--cream);
-    font-size: 15px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: var(--shadow-sm);
-}
-
-.btn:hover {
-    background: var(--green-600);
-    color: #fff;
-}
-
 /* ── 7. Sekce ─────────────────────────────────────────────────────────── */
 
 .section {
     max-width: var(--measure);
     margin: 0 auto;
-    padding: 44px 22px;
+    padding: 48px 22px;
     scroll-margin-top: var(--topbar-h);
 }
 
 .section + .section {
-    border-top: 1px solid rgba(39, 80, 63, 0.13);
+    border-top: 1px solid rgba(39, 80, 63, 0.1);
 }
 
 .section-title {
-    margin: 0 0 6px;
+    margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(26px, 6vw, 34px);
+    font-size: clamp(28px, 5vw, 36px);
     line-height: 1.15;
     color: var(--green-900);
 }
@@ -291,9 +257,9 @@ a:hover {
 }
 
 .section-lead {
-    margin: 16px 0 24px;
-    max-width: 62ch;
-    color: #3a4b43;
+    margin: 14px 0 26px;
+    max-width: 60ch;
+    color: var(--ink-muted);
 }
 
 .section p {
@@ -309,17 +275,17 @@ a:hover {
 }
 
 .card {
-    padding: 20px 20px 18px;
-    border: 1px solid rgba(168, 130, 63, 0.3);
+    padding: 22px 22px 20px;
+    border: 1px solid rgba(39, 80, 63, 0.14);
     border-radius: var(--radius);
-    background: var(--card-bg);
-    box-shadow: var(--shadow);
+    background: rgba(255, 253, 248, 0.92);
+    box-shadow: 0 2px 8px rgba(30, 60, 48, 0.06);
 }
 
 .card h3 {
-    margin: 0 0 10px;
+    margin: 0 0 8px;
     font-family: var(--font-display);
-    font-size: 19px;
+    font-size: 18px;
     color: var(--green-900);
 }
 
@@ -338,16 +304,16 @@ a:hover {
 
 .checklist li {
     position: relative;
-    padding: 3px 0 3px 26px;
+    padding: 4px 0 4px 20px;
 }
 
 .checklist li::before {
     content: '';
     position: absolute;
-    left: 6px;
-    top: 12px;
-    width: 7px;
-    height: 7px;
+    left: 4px;
+    top: 13px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
     background: var(--brass);
 }
@@ -356,43 +322,33 @@ a:hover {
 
 .timeline {
     margin: 0;
-    padding: 0 0 0 26px;
+    padding: 0;
     list-style: none;
-    border-left: 2px solid var(--green-300);
 }
 
 .timeline li {
-    position: relative;
-    padding: 0 0 20px 4px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(39, 80, 63, 0.1);
 }
 
 .timeline li:last-child {
     padding-bottom: 0;
-}
-
-.timeline li::before {
-    content: '';
-    position: absolute;
-    left: -33px;
-    top: 7px;
-    width: 12px;
-    height: 12px;
-    border: 2px solid var(--green-700);
-    border-radius: 50%;
-    background: var(--cream);
+    border-bottom: 0;
 }
 
 .timeline .time {
-    display: block;
     font-family: var(--font-display);
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
+    letter-spacing: 0.2px;
     color: var(--brass);
 }
 
 .timeline .what {
-    display: block;
-    color: #3a4b43;
+    color: var(--ink);
 }
 
 .timeline .time-highlight {
@@ -403,6 +359,14 @@ a:hover {
     color: var(--green-900);
     font-weight: 700;
     font-variant-numeric: tabular-nums;
+}
+
+@media (min-width: 620px) {
+    .timeline li {
+        grid-template-columns: 150px 1fr;
+        gap: 24px;
+        align-items: baseline;
+    }
 }
 
 /* ── 11. Mapa ─────────────────────────────────────────────────────────── */
@@ -426,6 +390,51 @@ a:hover {
     background: var(--green-100);
 }
 
+/* Vlastní ikony v mapě: kapka tvaru špendlíku, uvnitř dům, bus, vlak
+   nebo pramen. Kreslené jako inline SVG, bez dalších souborů. */
+.map-pin {
+    background: none;
+    border: 0;
+    filter: drop-shadow(0 4px 6px rgba(30, 60, 48, 0.35));
+}
+
+.map-pin-svg {
+    display: block;
+    width: 32px;
+    height: 44px;
+    transition: transform 0.15s ease;
+}
+
+.map-pin:hover .map-pin-svg {
+    transform: translateY(-2px);
+}
+
+.map-pin-body {
+    fill: var(--green-700);
+    stroke: var(--cream);
+    stroke-width: 2;
+}
+
+.map-pin-symbol {
+    fill: var(--cream);
+}
+
+.map-pin-symbol path {
+    fill-rule: evenodd;
+}
+
+.map-pin-bus .map-pin-body {
+    fill: var(--brass);
+}
+
+.map-pin-train .map-pin-body {
+    fill: #3f6e86;
+}
+
+.map-pin-spring .map-pin-body {
+    fill: #2f7f9e;
+}
+
 .map-noscript {
     margin: 0;
     padding: 18px 20px;
@@ -433,8 +442,8 @@ a:hover {
 }
 
 .map-actions {
-    margin: 0;
-    font-size: 15px;
+    margin: 0 0 20px;
+    font-size: 14px;
     color: var(--ink-muted);
 }
 
@@ -506,7 +515,18 @@ a:hover {
 }
 
 .streetview {
-    margin-top: 18px;
+    margin-top: 16px;
+    padding: 18px;
+    border: 1px solid rgba(39, 80, 63, 0.14);
+    border-radius: var(--radius);
+    background: rgba(255, 253, 248, 0.92);
+}
+
+.streetview h3 {
+    margin: 0 0 10px;
+    font-family: var(--font-display);
+    font-size: 18px;
+    color: var(--green-900);
 }
 
 .streetview iframe {
@@ -515,8 +535,7 @@ a:hover {
     max-width: 400px;
     height: 300px;
     border: 0;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
+    border-radius: 10px;
 }
 
 .stay-meta {
@@ -535,59 +554,70 @@ a:hover {
 
 .teams {
     display: grid;
-    gap: 12px;
+    gap: 0;
     margin: 0;
     padding: 0;
     list-style: none;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    border: 1px solid rgba(39, 80, 63, 0.14);
+    border-radius: var(--radius);
+    background: rgba(255, 253, 248, 0.92);
+    overflow: hidden;
 }
 
 .team {
-    padding: 16px 16px 14px;
-    border: 1px solid rgba(168, 130, 63, 0.32);
-    border-radius: var(--radius);
-    background: var(--card-bg);
-    box-shadow: var(--shadow-sm);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2px 16px;
+    padding: 14px 18px;
+    border: 0;
+    border-bottom: 1px solid rgba(39, 80, 63, 0.1);
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+.team:last-child {
+    border-bottom: 0;
+}
+
+.team.is-confirmed {
+    box-shadow: inset 3px 0 0 rgba(28, 109, 62, 0.45);
 }
 
 .team-name {
     display: block;
     font-family: var(--font-display);
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--green-900);
 }
 
 .team-note {
     display: block;
-    margin-top: 4px;
-    font-size: 14px;
-    color: var(--brass);
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-muted);
 }
 
 .team-status {
-    display: inline-block;
-    margin-top: 10px;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin: 0;
     padding: 3px 11px 3px 9px;
     border-radius: 999px;
     background: rgba(28, 109, 62, 0.13);
     color: #1c6d3e;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 700;
-    letter-spacing: 1.2px;
+    letter-spacing: 1px;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .team-check {
     font-size: 14px;
     line-height: 1;
-}
-
-/* Potvrzený tým: zelený rámeček i nádech karty, ať je to vidět na první
-   pohled. Nepotvrzené karty zůstávají v běžné kartové barvě. */
-.team.is-confirmed {
-    border-color: rgba(28, 109, 62, 0.5);
-    background: linear-gradient(165deg, #fffdf7 0%, #f2f8f1 55%, #e2efe1 100%);
 }
 
 /* ── 14. Kontakty ─────────────────────────────────────────────────────── */
@@ -661,11 +691,11 @@ a:hover {
 
 @media (min-width: 720px) {
     .section {
-        padding: 56px 24px;
+        padding: 64px 24px;
     }
 
     .hero {
-        padding: 72px 24px 78px;
+        padding: 68px 24px 60px;
     }
 }
 
@@ -681,33 +711,32 @@ a:hover {
 
 .countdowns {
     display: grid;
-    gap: 14px;
-    max-width: 660px;
-    margin: 24px auto 28px;
+    gap: 12px;
+    max-width: 680px;
+    margin: 26px auto 24px;
     text-align: left;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .countdown {
-    padding: 16px 18px 18px;
-    border: 1px solid rgba(168, 130, 63, 0.32);
+    padding: 16px 18px;
+    border: 1px solid rgba(39, 80, 63, 0.14);
     border-radius: var(--radius);
-    background: var(--card-bg);
-    box-shadow: var(--shadow-sm);
+    background: rgba(255, 253, 248, 0.9);
 }
 
 .countdown-who {
     display: block;
     font-family: var(--font-display);
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--green-900);
 }
 
 .countdown-when {
     display: block;
-    margin: 2px 0 12px;
-    font-size: 14px;
+    margin: 2px 0 10px;
+    font-size: 13px;
     line-height: 1.4;
     color: var(--ink-muted);
 }
@@ -715,7 +744,7 @@ a:hover {
 .countdown-clock {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px 16px;
     margin: 0;
     font-size: 14px;
     line-height: 1.4;
@@ -723,29 +752,28 @@ a:hover {
 }
 
 .cd-cell {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    min-width: 56px;
-    padding: 6px 8px 5px;
-    border-radius: 10px;
-    background: rgba(216, 187, 128, 0.22);
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    min-width: 0;
+    padding: 0;
+    background: none;
 }
 
 .cd-value {
     font-family: var(--font-display);
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 1;
     color: var(--green-900);
     font-variant-numeric: tabular-nums;
 }
 
 .cd-unit {
     font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #8a6a2c;
+    letter-spacing: 0.3px;
+    text-transform: lowercase;
+    color: var(--ink-muted);
 }
 
 .countdown-done {
@@ -815,7 +843,6 @@ a:hover {
 
 @media print {
     .topbar,
-    .hero-cta,
     .ticker,
     .skip {
         display: none;

@@ -29,8 +29,8 @@ Všechno je v jediném souboru `index.html`, rozdělené komentářem na sekce
   `<span class="team-name">` a `<span class="team-note">`. Ubírání funguje stejně.
 - **Označit tým jako potvrzený** — na `<li class="team">` přidej třídu
   `is-confirmed` a dovnitř `<span class="team-status"><span class="team-check"
-  aria-hidden="true">✓</span> Potvrzeno</span>`. Karta dostane zelený rámeček,
-  zelený nádech a fajfku; bez třídy zůstane karta v běžné barvě.
+  aria-hidden="true">✓</span> Potvrzeno</span>`. Řádek dostane zelený proužek
+  vlevo a badge Potvrzeno; bez třídy zůstane bez proužku.
 - **Doplnit telefon nebo e-mail** — použij odkaz, ať se to dá z mobilu
   rovnou vytukat: `<a href="tel:+420123456789">+420 123 456 789</a>`
   nebo `<a href="mailto:nekdo@example.com">nekdo@example.com</a>`.
