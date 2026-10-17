@@ -189,8 +189,7 @@
 })();
 
 // ── Mapa ───────────────────────────────────────────────────────────────
-// Jedna mapa nad Luhačovicemi: kolonáda, vila Bellevue, Hotel Vincent
-// a penzion Karina.
+// Jedna mapa nad Luhačovicemi: kolonáda a penzion Karina.
 // Kreslí ji Leaflet z CDN; když se nenačte, zůstanou odkazy pod mapou.
 // Souřadnice jsou z OpenStreetMap, takže se dají kdykoli dohledat.
 
@@ -205,9 +204,7 @@
 
     var mista = [
         { nazev: 'Kolonáda a prameny', popis: 'Vincentka a spol. — pije se přímo na místě.', lat: 49.10680, lon: 17.76259, kruh: true },
-        { nazev: 'Vila Bellevue', popis: 'U Šťávnice 237 — Manželé Paprčkovi.', lat: 49.10067, lon: 17.75802 },
-        { nazev: 'Hotel Vincent', popis: 'Hradisko 467 — Kiki + Vašek + Natálka.', lat: 49.09506, lon: 17.75002 },
-        { nazev: 'Penzion Karina', popis: 'Masarykova 174 — Žantetka + 3, Honzík + Maryša, Káťa + Dominik.', lat: 49.09945, lon: 17.75734 }
+        { nazev: 'Penzion Karina', popis: 'Masarykova 174.', lat: 49.09945, lon: 17.75734 }
     ];
 
     var map = window.L.map(mapa, {
@@ -252,6 +249,6 @@
         body.push(souradnice);
     });
 
-    // Vycentrováno na Luhačovice: všechny čtyři body leží ve městě.
+    // Vycentrováno na Luhačovice: kolonáda i penzion Karina leží ve městě.
     map.fitBounds(body, { padding: [28, 28] });
 })();
